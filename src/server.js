@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs').promises;
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -19,7 +19,7 @@ let currentCodeFile = null;
 // Start recording endpoint
 app.post('/api/start', async (req, res) => {
     try {
-        const { url } = req.body;
+        const { url, testName } = req.body;
         
         if (!url) {
             return res.status(400).json({ error: 'URL is required' });
@@ -42,12 +42,12 @@ app.post('/api/start', async (req, res) => {
         currentCodeFile = path.join(__dirname, `temp-${Date.now()}.js`);
         console.log('Code will be saved to:', currentCodeFile);
 
-        // Start new codegen process with output file
+        // Start Playwright codegen with basic options
         codegenProcess = spawn('npx', [
             'playwright',
             'codegen',
-            '--output',
-            currentCodeFile,
+            '--target', 'javascript',
+            '--output', currentCodeFile,
             '--viewport-size=1920,1080',
             url
         ], {
@@ -90,7 +90,7 @@ app.post('/api/stop', async (req, res) => {
 
     try {
         // Give codegen a moment to save the file
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Increased timeout
 
         let generatedCode = '';
         
@@ -100,6 +100,11 @@ app.post('/api/stop', async (req, res) => {
                 console.log('Reading code from:', currentCodeFile);
                 generatedCode = await fs.readFile(currentCodeFile, 'utf8');
                 console.log('Successfully read code file');
+                console.log('Code content:', generatedCode); // Log the actual code
+                
+                if (!generatedCode) {
+                    console.log('Warning: Empty code file');
+                }
                 
                 // Clean up the temp file
                 await fs.unlink(currentCodeFile);
@@ -126,10 +131,14 @@ app.post('/api/stop', async (req, res) => {
         codegenProcess = null;
         currentCodeFile = null;
 
-        res.json({
+        // Send the response
+        const response = {
             message: 'Recording stopped',
             code: generatedCode || '// No code was generated'
-        });
+        };
+        console.log('Sending response:', response);
+        res.json(response);
+        
     } catch (error) {
         console.error('\n=== STOP RECORDING ERROR ===');
         console.error(error);
@@ -168,7 +177,12 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok' });
 });
 
+// Serve the main page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Start the server
-app.listen(port, () => {
-    console.log(`🎥 DSmokeyRecorder server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 }); 
