@@ -24,6 +24,9 @@ test-results/
 playwright-report/
 playwright/.cache/
 
+# Build output
+dist/
+
 # Temporary files
 *.tmp
 temp-*.js
