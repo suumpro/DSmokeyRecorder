@@ -1,6 +1,6 @@
 {
   "name": "dsmokeyrecorder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A browser test recorder that generates Playwright test code from your actions",
   "main": "src/server.js",
   "scripts": {
@@ -9,12 +9,11 @@
   },
   "keywords": [
     "playwright",
-    "testing",
-    "automation",
+    "test",
     "recorder",
-    "codegen"
+    "automation"
   ],
-  "author": "",
+  "author": "DSmokeyRecorder Team",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
