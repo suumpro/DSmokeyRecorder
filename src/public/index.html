@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSmokeyRecorder - Browser Test Recorder</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Material Icons for better UI -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎥 DSmokeyRecorder</h1>
+            <p class="subtitle">Record browser actions and generate test code automatically</p>
+        </header>
+
+        <main>
+            <div class="control-panel">
+                <div class="url-input-container">
+                    <input type="url" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)" required>
+                    <button id="startBtn" class="primary">
+                        <span class="material-icons">fiber_manual_record</span>
+                        Start Recording
+                    </button>
+                    <button id="stopBtn" class="danger" disabled>
+                        <span class="material-icons">stop</span>
+                        Stop Recording
+                    </button>
+                </div>
+
+                <div class="options-panel">
+                    <label class="toggle">
+                        <input type="checkbox" id="typeScriptToggle">
+                        <span class="toggle-label">Generate TypeScript</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="debugModeToggle">
+                        <span class="toggle-label">Debug Mode</span>
+                    </label>
+                    <button id="copyBtn" class="secondary" disabled>
+                        <span class="material-icons">content_copy</span>
+                        Copy Code
+                    </button>
+                    <button id="downloadBtn" class="secondary" disabled>
+                        <span class="material-icons">download</span>
+                        Download
+                    </button>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <h3>Generated Test Code</h3>
+                    <div class="recording-indicator" id="recordingIndicator">
+                        <span class="material-icons">circle</span>
+                        Recording...
+                    </div>
+                </div>
+                <pre id="codeOutput" class="code-output">// Your test code will appear here when you start recording...</pre>
+            </div>
+
+            <div id="debugPanel" class="debug-panel" style="display: none;">
+                <div class="debug-header">
+                    <h3>Debug Information</h3>
+                    <button id="clearDebugBtn" class="secondary small">
+                        <span class="material-icons">clear_all</span>
+                        Clear
+                    </button>
+                </div>
+                <pre id="debugOutput" class="debug-output"></pre>
+            </div>
+        </main>
+
+        <footer>
+            <p>Made with ❤️ using Playwright</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
