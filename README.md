@@ -49,12 +49,20 @@ npm start
 
 ## Version History
 
+- 0.2.0 (2025-03-26)
+  - Fixed download functionality with proper code formatting
+  - Added detailed debug logging throughout the application
+  - Improved code generation with better Playwright test structure
+  - Added FHD (1920x1080) viewport support
+  - Removed unnecessary boilerplate code from generated tests
+  - Enhanced error handling and notifications
+  - Fixed event listener issues
+
 - 0.1.0 (2024-03-15)
   - Initial release
-  - Basic recording functionality
-  - Test code generation
-  - File download with custom naming
-  - TypeScript support
+  - Basic test recording functionality
+  - Custom test naming support
+  - Code generation with Playwright
 
 ## License
 
